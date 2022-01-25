@@ -4,11 +4,11 @@ import logging
 import pyfiglet
 
 from datetime import datetime
-
+from dotenv import load_dotenv
 from flask import Flask, redirect, request
-
 from requests import get
 
+load_dotenv()
 
 logging.getLogger('werkzeug').disabled = True
 os.environ['WERKZEUG_RUN_MAIN'] = 'true'
@@ -52,7 +52,6 @@ def index():
     datenow = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
     response = get(
-        method='GET',
         headers={'User-Agent': 'keycdn-tools:https://www.example.com'},
         url=f'https://tools.keycdn.com/geo.json?host={request.remote_addr}'
     )
