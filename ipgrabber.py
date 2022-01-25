@@ -25,13 +25,27 @@ fieldnames = [
 app = Flask(__name__)
 
 
-def print_header():
-    print(f'{pyfiglet.figlet_format("IPGRABBER")}By Ivan Galvez\n')
-    print(f'Link to share: http://{get_public_ip()}:8080\n')
-    print(f'Connections:')
-
 def get_public_ip():
     return get('https://api.ipify.org').content.decode('utf8')
+
+def get_noip_link():
+    public_ip = get_public_ip()
+
+    noip_user = os.environ.get('NOIP_USERNAME')
+    noip_pass = os.environ.get('NOIP_PASSWORD')
+    noip_host = os.environ.get('NOIP_HOSTNAME')
+
+    res = get(url=f'http://{noip_user}:{noip_pass}@dynupdate.no-ip.com/nic/update?hostname={noip_host}&myip={public_ip}:8080')
+
+    res.raise_for_status()
+
+    return f'http://{noip_host}'
+
+def print_header():
+    print(f'{pyfiglet.figlet_format("IPGRABBER")}By Ivan Galvez\n')
+    print(f'Link to share: {get_noip_link()}\n')
+    print(f'Connections:')
+
 
 @app.route('/')
 def index():
