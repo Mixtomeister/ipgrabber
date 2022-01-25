@@ -15,13 +15,6 @@ os.environ['WERKZEUG_RUN_MAIN'] = 'true'
 
 logger = logging.getLogger(__name__)
 
-fieldnames = [
-    'host', 'ip', 'rdns', 'asn', 'isp', 'country_name',
-    'country_code', 'region_name', 'region_code', 'city',
-    'postal_code', 'continent_name', 'continent_code', 'latitude',
-    'longitude', 'metro_code', 'timezone', 'datetime', 'user_agent'
-]
-
 app = Flask(__name__)
 
 
